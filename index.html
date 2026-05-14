@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>新店 <> 北市</title>
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: #121212;
+            color: #e0e0e0;
+            margin: 0;
+            padding: 20px;
+        }
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            border-left: 5px solid #00d1b2;
+            padding-left: 15px;
+            margin: 30px 0 15px 0;
+        }
+        h2 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+        .weather-info {
+            font-size: 0.9rem;
+            color: #00d1b2;
+            background: #1e1e1e;
+            padding: 4px 12px;
+            border-radius: 20px;
+            border: 1px solid #333;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 20px;
+        }
+        .cam-card {
+            background: #1e1e1e;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #333;
+            display: flex;
+            flex-direction: column;
+        }
+        .cam-title {
+            padding: 12px 15px;
+            background: #252525;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        .video-wrapper {
+            position: relative;
+            width: 100%;
+            padding-top: 56.25%;
+            background: #000;
+        }
+        video {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+        }
+        .link-placeholder {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: #888;
+        }
+        .btn-open {
+            margin-top: 10px;
+            padding: 8px 20px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        footer {
+            margin-top: 50px;
+            padding: 20px;
+            text-align: center;
+            color: #555;
+            font-size: 0.8rem;
+            border-top: 1px solid #222;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="section-header">
+        <h2>新店 to 北市</h2>
+        <div class="weather-info">信義區：26°C ☀️ 晴天</div>
+    </div>
+    
+    <div class="container">
+        <div class="cam-card">
+            <div class="cam-title">A1: 環快1</div>
+            <div class="video-wrapper">
+                <div class="link-placeholder">
+                    <p>此來源限制嵌入</p>
+                    <a href="https://atis.ntpc.gov.tw/ATIS/ShowFrame4CCTV/C000404" target="_blank" class="btn-open">開啟監視畫面</a>
+                </div>
+            </div>
+        </div>
+        <div class="cam-card">
+            <div class="cam-title">A2: 環快2</div>
+            <div class="video-wrapper">
+                <div class="link-placeholder">
+                    <p>此來源限制嵌入</p>
+                    <a href="https://atis.ntpc.gov.tw/ATIS/ShowFrame4CCTV/C000042" target="_blank" class="btn-open">開啟監視畫面</a>
+                </div>
+            </div>
+        </div>
+        <div class="cam-card">
+            <div class="cam-title">A3: 環快 to 基高</div>
+            <div class="video-wrapper">
+                <video id="video-A3" controls autoplay muted playsinline></video>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-header">
+        <h2>北市 to 新店</h2>
+        <div class="weather-info">新店區：25°C ☁️ 多雲</div>
+    </div>
+
+    <div class="container">
+        <div class="cam-card">
+            <div class="cam-title">B1: 基高往公館</div>
+            <div class="video-wrapper">
+                <video id="video-B1" controls autoplay muted playsinline></video>
+            </div>
+        </div>
+        <div class="cam-card">
+            <div class="cam-title">B2: 公館圓環</div>
+            <div class="video-wrapper">
+                <video id="video-B2" controls autoplay muted playsinline></video>
+            </div>
+        </div>
+    </div>
+
+    <footer>idea by KG</footer>
+
+    <script>
+        function setupHls(id, url) {
+            var video = document.getElementById(id);
+            if (Hls.isSupported()) {
+                var hls = new Hls();
+                hls.loadSource(url);
+                hls.attachMedia(video);
+            } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+                video.src = url;
+            }
+        }
+        setupHls('video-A3', 'https://jtmctrafficcctv5.gov.taipei/NVR/bc6377b9-5ee7-447f-bbc5-e72ce427da83/live.m3u8');
+        setupHls('video-B1', 'https://jtmctrafficcctv5.gov.taipei/NVR/52c5b1f5-822e-4ec1-9ad2-1cba32e2d815/live.m3u8');
+        setupHls('video-B2', 'https://jtmctrafficcctv2.gov.taipei/NVR/0fb4fbce-c1a8-4d22-aded-94dffe61b84d/live.m3u8');
+    </script>
+</body>
+</html>
