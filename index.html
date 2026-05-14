@@ -33,7 +33,7 @@
             background: rgba(15, 17, 19, 0.9);
             backdrop-filter: blur(12px);
             border-bottom: 1px solid #333;
-            padding: 12px 15px;
+            padding: 10px 15px;
         }
 
         .nav-container {
@@ -43,7 +43,7 @@
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 15px;
+            gap: 10px;
         }
 
         .brand {
@@ -53,20 +53,44 @@
             letter-spacing: 1px;
         }
 
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* 重新整理按鈕樣式 */
+        .btn-refresh-all {
+            background: #3273dc;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: 0.2s;
+        }
+
+        .btn-refresh-all:hover { background: #2a62bc; }
+        .btn-refresh-all:active { transform: scale(0.95); }
+
         .tabs {
             display: flex;
-            gap: 8px;
+            gap: 5px;
         }
 
         .tab-btn {
             background: #252525;
             border: 1px solid #444;
             color: var(--text-dim);
-            padding: 6px 14px;
-            border-radius: 8px;
+            padding: 6px 12px;
+            border-radius: 6px;
             cursor: pointer;
             font-size: 13px;
-            transition: 0.3s;
         }
 
         .tab-btn.active {
@@ -79,7 +103,7 @@
         /* 內容區塊 */
         .content-section {
             max-width: 1400px;
-            margin: 25px auto;
+            margin: 20px auto;
             padding: 0 15px;
             display: none;
         }
@@ -88,7 +112,6 @@
             display: block;
         }
 
-        /* 區塊標題與氣象資訊 */
         .section-header {
             display: flex;
             justify-content: space-between;
@@ -117,16 +140,10 @@
             padding: 4px 12px;
             border-radius: 50px;
             font-size: 13px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
             color: #ccc;
         }
 
-        .weather-temp {
-            color: var(--primary-color);
-            font-weight: bold;
-        }
+        .weather-temp { color: var(--primary-color); font-weight: bold; }
 
         /* 網格系統 */
         .grid-container {
@@ -141,46 +158,35 @@
             border-radius: 12px;
             overflow: hidden;
             border: 1px solid #333;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         }
 
         .cam-info {
-            padding: 10px 15px;
+            padding: 8px 12px;
             background: #25282c;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        .cam-title {
-            font-size: 13px;
-            font-weight: 600;
-            color: #eee;
-        }
+        .cam-title { font-size: 13px; font-weight: 600; color: #eee; }
 
         .live-indicator {
             display: flex;
             align-items: center;
             gap: 5px;
-            font-size: 11px;
+            font-size: 10px;
             color: var(--danger-color);
-            text-transform: uppercase;
             font-weight: bold;
         }
 
         .dot {
-            width: 6px;
-            height: 6px;
+            width: 6px; height: 6px;
             background: var(--danger-color);
             border-radius: 50%;
             animation: blink 1s infinite;
         }
 
-        @keyframes blink {
-            0% { opacity: 1; }
-            50% { opacity: 0.3; }
-            100% { opacity: 1; }
-        }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
 
         .video-wrapper {
             position: relative;
@@ -206,28 +212,18 @@
             background: #1a1a1a;
             color: #666;
             font-size: 12px;
-            padding: 20px;
+            padding: 10px;
             text-align: center;
         }
 
         .btn-link {
-            margin-top: 8px;
-            padding: 6px 15px;
+            margin-top: 5px;
+            padding: 4px 12px;
             background: var(--accent-color);
             color: white;
             text-decoration: none;
-            border-radius: 5px;
-            font-weight: bold;
-        }
-
-        .refresh-btn {
-            background: none;
-            border: 1px solid #444;
-            color: var(--text-dim);
-            padding: 4px 10px;
-            border-radius: 5px;
+            border-radius: 4px;
             font-size: 12px;
-            cursor: pointer;
         }
 
         footer {
@@ -235,14 +231,13 @@
             padding: 20px;
             text-align: center;
             color: #444;
-            font-size: 12px;
+            font-size: 11px;
             border-top: 1px solid #222;
         }
 
         @media (max-width: 600px) {
-            .nav-container { flex-direction: column; align-items: center; }
+            .nav-container { flex-direction: column; }
             .grid-container { grid-template-columns: 1fr; }
-            .section-header { flex-direction: column; align-items: flex-start; }
         }
     </style>
 </head>
@@ -251,10 +246,13 @@
     <header>
         <div class="nav-container">
             <div class="brand">TRAFFIC LIVE</div>
-            <div class="tabs">
-                <button class="tab-btn active" onclick="switchTab('all')">顯示全部</button>
-                <button class="tab-btn" onclick="switchTab('to-taipei')">往北市</button>
-                <button class="tab-btn" onclick="switchTab('to-xindian')">往新店</button>
+            <div class="nav-actions">
+                <button class="btn-refresh-all" onclick="globalRefresh()">↻ 重新整理</button>
+                <div class="tabs">
+                    <button class="tab-btn active" onclick="switchTab('all')">全部</button>
+                    <button class="tab-btn" onclick="switchTab('to-taipei')">去程</button>
+                    <button class="tab-btn" onclick="switchTab('to-xindian')">回程</button>
+                </div>
             </div>
         </div>
     </header>
@@ -264,11 +262,8 @@
         <div class="section-header">
             <div class="title-group">
                 <h2>新店 → 北市</h2>
-                <div class="weather-chip">
-                    📍 信義區 <span class="weather-temp">26°C</span> ☀️ 晴天
-                </div>
+                <div class="weather-chip">📍 信義區 <span class="weather-temp">26°C</span> ☀️</div>
             </div>
-            <button class="refresh-btn" onclick="refreshImages()">刷新國道影像</button>
         </div>
         
         <div class="grid-container">
@@ -276,8 +271,8 @@
                 <div class="cam-info"><span class="cam-title">A1: 環快1 (新北)</span></div>
                 <div class="video-wrapper">
                     <div class="placeholder-box">
-                        <p>此來源限制嵌入</p>
-                        <a href="https://atis.ntpc.gov.tw/ATIS/ShowFrame4CCTV/C000404" target="_blank" class="btn-link">開啟外部影像</a>
+                        <p>限制嵌入</p>
+                        <a href="https://atis.ntpc.gov.tw/ATIS/ShowFrame4CCTV/C000404" target="_blank" class="btn-link">外部開啟</a>
                     </div>
                 </div>
             </div>
@@ -285,43 +280,30 @@
                 <div class="cam-info"><span class="cam-title">A2: 環快2 (新北)</span></div>
                 <div class="video-wrapper">
                     <div class="placeholder-box">
-                        <p>此來源限制嵌入</p>
-                        <a href="https://atis.ntpc.gov.tw/ATIS/ShowFrame4CCTV/C000042" target="_blank" class="btn-link">開啟外部影像</a>
+                        <p>限制嵌入</p>
+                        <a href="https://atis.ntpc.gov.tw/ATIS/ShowFrame4CCTV/C000042" target="_blank" class="btn-link">外部開啟</a>
                     </div>
                 </div>
             </div>
             <div class="cam-card">
-                <div class="cam-info">
-                    <span class="cam-title">A3: 環快 to 基高</span>
-                    <div class="live-indicator"><div class="dot"></div>LIVE</div>
-                </div>
+                <div class="cam-info"><span class="cam-title">A3: 環快 to 基高</span><div class="live-indicator"><div class="dot"></div>LIVE</div></div>
                 <div class="video-wrapper"><video id="video-A3" autoplay muted playsinline></video></div>
             </div>
             <div class="cam-card">
-                <div class="cam-info">
-                    <span class="cam-title">A4: 樂業 > 基高</span>
-                    <div class="live-indicator"><div class="dot"></div>LIVE</div>
-                </div>
+                <div class="cam-info"><span class="cam-title">A4: 樂業 > 基高</span><div class="live-indicator"><div class="dot"></div>LIVE</div></div>
                 <div class="video-wrapper"><video id="video-A4" autoplay muted playsinline></video></div>
             </div>
             <div class="cam-card">
-                <div class="cam-info">
-                    <span class="cam-title">A5: 六張犁圓環</span>
-                    <div class="live-indicator"><div class="dot"></div>LIVE</div>
-                </div>
+                <div class="cam-info"><span class="cam-title">A5: 六張犁圓環</span><div class="live-indicator"><div class="dot"></div>LIVE</div></div>
                 <div class="video-wrapper"><video id="video-A5" autoplay muted playsinline></video></div>
             </div>
             <div class="cam-card">
                 <div class="cam-info"><span class="cam-title">A6: 安坑往南 (國三)</span></div>
-                <div class="video-wrapper">
-                    <img class="highway-img" data-src="https://cctvn.freeway.gov.tw/abs2mjpg/bmjpg?camera=33120" src="https://cctvn.freeway.gov.tw/abs2mjpg/bmjpg?camera=33120">
-                </div>
+                <div class="video-wrapper"><img class="highway-img" data-src="https://cctvn.freeway.gov.tw/abs2mjpg/bmjpg?camera=33120" src="https://cctvn.freeway.gov.tw/abs2mjpg/bmjpg?camera=33120"></div>
             </div>
             <div class="cam-card">
                 <div class="cam-info"><span class="cam-title">A7: 安坑往北 (國三)</span></div>
-                <div class="video-wrapper">
-                    <img class="highway-img" data-src="https://cctvn.freeway.gov.tw/abs2mjpg/bmjpg?camera=33010" src="https://cctvn.freeway.gov.tw/abs2mjpg/bmjpg?camera=33010">
-                </div>
+                <div class="video-wrapper"><img class="highway-img" data-src="https://cctvn.freeway.gov.tw/abs2mjpg/bmjpg?camera=33010" src="https://cctvn.freeway.gov.tw/abs2mjpg/bmjpg?camera=33010"></div>
             </div>
         </div>
     </section>
@@ -331,40 +313,37 @@
         <div class="section-header">
             <div class="title-group">
                 <h2>北市 → 新店</h2>
-                <div class="weather-chip">
-                    📍 新店區 <span class="weather-temp">25°C</span> ☁️ 多雲
-                </div>
+                <div class="weather-chip">📍 新店區 <span class="weather-temp">25°C</span> ☁️</div>
             </div>
         </div>
         <div class="grid-container">
             <div class="cam-card">
-                <div class="cam-info">
-                    <span class="cam-title">B1: 基高 > 公館</span>
-                    <div class="live-indicator"><div class="dot"></div>LIVE</div>
-                </div>
+                <div class="cam-info"><span class="cam-title">B1: 基高往公館</span><div class="live-indicator"><div class="dot"></div>LIVE</div></div>
                 <div class="video-wrapper"><video id="video-B1" autoplay muted playsinline></video></div>
             </div>
             <div class="cam-card">
-                <div class="cam-info">
-                    <span class="cam-title">B2: 公館圓環</span>
-                    <div class="live-indicator"><div class="dot"></div>LIVE</div>
-                </div>
+                <div class="cam-info"><span class="cam-title">B2: 公館圓環</span><div class="live-indicator"><div class="dot"></div>LIVE</div></div>
                 <div class="video-wrapper"><video id="video-B2" autoplay muted playsinline></video></div>
             </div>
-            <!-- 新增 B3 -->
             <div class="cam-card">
-                <div class="cam-info">
-                    <span class="cam-title">B3: 師大路 > 環快</span>
-                    <div class="live-indicator"><div class="dot"></div>LIVE</div>
-                </div>
+                <div class="cam-info"><span class="cam-title">B3: 師大路 > 環快</span><div class="live-indicator"><div class="dot"></div>LIVE</div></div>
                 <div class="video-wrapper"><video id="video-B3" autoplay muted playsinline></video></div>
             </div>
         </div>
     </section>
 
-    <footer>idea by KG | 每 5 分鐘自動刷新國道圖片來源</footer>
+    <footer>idea by KG | 點擊重新整理可立即更新所有路況影像</footer>
 
     <script>
+        const sources = {
+            'video-A3': 'https://jtmctrafficcctv5.gov.taipei/NVR/bc6377b9-5ee7-447f-bbc5-e72ce427da83/live.m3u8',
+            'video-A4': 'https://jtmctrafficcctv5.gov.taipei/NVR/83a4f760-46b7-4711-b064-16dcce6fbf63/live.m3u8',
+            'video-A5': 'https://jtmctrafficcctv5.gov.taipei/NVR/7140e6e8-fe07-471c-b798-65c634b9e2a2/live.m3u8',
+            'video-B1': 'https://jtmctrafficcctv5.gov.taipei/NVR/52c5b1f5-822e-4ec1-9ad2-1cba32e2d815/live.m3u8',
+            'video-B2': 'https://jtmctrafficcctv2.gov.taipei/NVR/0fb4fbce-c1a8-4d22-aded-94dffe61b84d/live.m3u8',
+            'video-B3': 'https://jtmctrafficcctv2.gov.taipei/NVR/3dbf7fcc-7725-46ab-a124-05c67db99dd7/live.m3u8'
+        };
+
         function setupHls(id, url) {
             const video = document.getElementById(id);
             if (!video) return;
@@ -377,39 +356,36 @@
             }
         }
 
-        function switchTab(mode) {
-            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-            const sTaipei = document.getElementById('section-to-taipei');
-            const sXindian = document.getElementById('section-to-xindian');
-            if (mode === 'all') {
-                sTaipei.classList.add('active'); sXindian.classList.add('active');
-            } else if (mode === 'to-taipei') {
-                sTaipei.classList.add('active'); sXindian.classList.remove('active');
-            } else {
-                sTaipei.classList.remove('active'); sXindian.classList.add('active');
-            }
-        }
-
-        function refreshImages() {
+        function globalRefresh() {
+            // 1. 刷新所有 HLS 影片
+            Object.keys(sources).forEach(id => setupHls(id, sources[id]));
+            // 2. 刷新所有國道圖片
             const images = document.querySelectorAll('.highway-img');
             images.forEach(img => {
                 const base = img.getAttribute('data-src');
                 img.src = base + "&t=" + new Date().getTime();
             });
+            
+            // 按鈕視覺回饋
+            const btn = document.querySelector('.btn-refresh-all');
+            const originalText = btn.innerText;
+            btn.innerText = "✓ 已更新";
+            setTimeout(() => btn.innerText = originalText, 2000);
+        }
+
+        function switchTab(mode) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            const sTaipei = document.getElementById('section-to-taipei');
+            const sXindian = document.getElementById('section-to-xindian');
+            if (mode === 'all') { sTaipei.classList.add('active'); sXindian.classList.add('active'); }
+            else if (mode === 'to-taipei') { sTaipei.classList.add('active'); sXindian.classList.remove('active'); }
+            else { sTaipei.classList.remove('active'); sXindian.classList.add('active'); }
         }
 
         window.onload = function() {
-            // 去程
-            setupHls('video-A3', 'https://jtmctrafficcctv5.gov.taipei/NVR/bc6377b9-5ee7-447f-bbc5-e72ce427da83/live.m3u8');
-            setupHls('video-A4', 'https://jtmctrafficcctv5.gov.taipei/NVR/83a4f760-46b7-4711-b064-16dcce6fbf63/live.m3u8');
-            setupHls('video-A5', 'https://jtmctrafficcctv5.gov.taipei/NVR/7140e6e8-fe07-471c-b798-65c634b9e2a2/live.m3u8');
-            // 回程
-            setupHls('video-B1', 'https://jtmctrafficcctv5.gov.taipei/NVR/52c5b1f5-822e-4ec1-9ad2-1cba32e2d815/live.m3u8');
-            setupHls('video-B2', 'https://jtmctrafficcctv2.gov.taipei/NVR/0fb4fbce-c1a8-4d22-aded-94dffe61b84d/live.m3u8');
-            setupHls('video-B3', 'https://jtmctrafficcctv2.gov.taipei/NVR/3dbf7fcc-7725-46ab-a124-05c67db99dd7/live.m3u8');
-            
-            setInterval(refreshImages, 300000);
+            Object.keys(sources).forEach(id => setupHls(id, sources[id]));
+            setInterval(globalRefresh, 300000); // 5分鐘自動全局刷一次
         };
     </script>
 </body>
