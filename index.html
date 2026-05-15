@@ -25,7 +25,6 @@
             padding-bottom: 50px;
         }
 
-        /* 導覽列與 Tabs */
         header {
             position: sticky;
             top: 0;
@@ -59,7 +58,6 @@
             gap: 10px;
         }
 
-        /* 重新整理按鈕樣式 */
         .btn-refresh-all {
             background: #3273dc;
             color: white;
@@ -100,7 +98,6 @@
             border-color: var(--primary-color);
         }
 
-        /* 內容區塊 */
         .content-section {
             max-width: 1400px;
             margin: 20px auto;
@@ -145,14 +142,12 @@
 
         .weather-temp { color: var(--primary-color); font-weight: bold; }
 
-        /* 網格系統 */
         .grid-container {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
             gap: 15px;
         }
 
-        /* 卡片設計 */
         .cam-card {
             background: var(--card-bg);
             border-radius: 12px;
@@ -211,19 +206,34 @@
             align-items: center;
             background: #1a1a1a;
             color: #666;
-            font-size: 12px;
             padding: 10px;
             text-align: center;
         }
 
+        /* 放大按鈕樣式 */
         .btn-link {
-            margin-top: 5px;
-            padding: 4px 12px;
+            display: inline-block;
+            margin-top: 10px;
+            padding: 12px 28px;
             background: var(--accent-color);
             color: white;
             text-decoration: none;
-            border-radius: 4px;
-            font-size: 12px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(50, 115, 220, 0.3);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .btn-link:hover {
+            background: #4a8dfd;
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(50, 115, 220, 0.5);
+        }
+
+        .btn-link:active {
+            transform: scale(0.95);
         }
 
         footer {
@@ -245,19 +255,18 @@
 
     <header>
         <div class="nav-container">
-            <div class="brand">TRAFFIC LIVE</div>
+            <div class="brand">CarCar Live 車車直播</div>
             <div class="nav-actions">
-                <button class="btn-refresh-all" onclick="globalRefresh()">↻ 重新整理</button>
+                <button class="btn-refresh-all" onclick="globalRefresh()">↻ RELOAD</button>
                 <div class="tabs">
-                    <button class="tab-btn active" onclick="switchTab('all')">全部</button>
-                    <button class="tab-btn" onclick="switchTab('to-taipei')">去程</button>
-                    <button class="tab-btn" onclick="switchTab('to-xindian')">回程</button>
+                    <button class="tab-btn active" onclick="switchTab('all')">ALL</button>
+                    <button class="tab-btn" onclick="switchTab('to-taipei')">>北市</button>
+                    <button class="tab-btn" onclick="switchTab('to-xindian')">>新店</button>
                 </div>
             </div>
         </div>
     </header>
 
-    <!-- 去程 -->
     <section id="section-to-taipei" class="content-section active">
         <div class="section-header">
             <div class="title-group">
@@ -268,47 +277,44 @@
         
         <div class="grid-container">
             <div class="cam-card">
-                <div class="cam-info"><span class="cam-title">A1: 環快1 (新北)</span></div>
+                <div class="cam-info"><span class="cam-title">A1: 環河 x 中正1</span></div>
                 <div class="video-wrapper">
                     <div class="placeholder-box">
-                        <p>限制嵌入</p>
-                        <a href="https://atis.ntpc.gov.tw/ATIS/ShowFrame4CCTV/C000404" target="_blank" class="btn-link">外部開啟</a>
+                        <a href="https://atis.ntpc.gov.tw/ATIS/ShowFrame4CCTV/C000404" target="_blank" class="btn-link">A1 : 環河 x 中正1</a>
                     </div>
                 </div>
             </div>
             <div class="cam-card">
-                <div class="cam-info"><span class="cam-title">A2: 環快2 (新北)</span></div>
+                <div class="cam-info"><span class="cam-title">A2: 環河 x 中正2</span></div>
                 <div class="video-wrapper">
                     <div class="placeholder-box">
-                        <p>限制嵌入</p>
-                        <a href="https://atis.ntpc.gov.tw/ATIS/ShowFrame4CCTV/C000042" target="_blank" class="btn-link">外部開啟</a>
+                        <a href="https://atis.ntpc.gov.tw/ATIS/ShowFrame4CCTV/C000042" target="_blank" class="btn-link">A2 : 環河 x 中正2</a>
                     </div>
                 </div>
             </div>
             <div class="cam-card">
-                <div class="cam-info"><span class="cam-title">A3: 環快 to 基高</span><div class="live-indicator"><div class="dot"></div>LIVE</div></div>
+                <div class="cam-info"><span class="cam-title">A3 : 環快 > 基高</span><div class="live-indicator"><div class="dot"></div>LIVE</div></div>
                 <div class="video-wrapper"><video id="video-A3" autoplay muted playsinline></video></div>
             </div>
             <div class="cam-card">
-                <div class="cam-info"><span class="cam-title">A4: 樂業 > 基高</span><div class="live-indicator"><div class="dot"></div>LIVE</div></div>
+                <div class="cam-info"><span class="cam-title">A4 : 基高 > 樂業</span><div class="live-indicator"><div class="dot"></div>LIVE</div></div>
                 <div class="video-wrapper"><video id="video-A4" autoplay muted playsinline></video></div>
             </div>
             <div class="cam-card">
-                <div class="cam-info"><span class="cam-title">A5: 六張犁圓環</span><div class="live-indicator"><div class="dot"></div>LIVE</div></div>
+                <div class="cam-info"><span class="cam-title">A5 : 六張犁圓環 (往北)</span><div class="live-indicator"><div class="dot"></div>LIVE</div></div>
                 <div class="video-wrapper"><video id="video-A5" autoplay muted playsinline></video></div>
             </div>
             <div class="cam-card">
-                <div class="cam-info"><span class="cam-title">A6: 安坑往南 (國三)</span></div>
+                <div class="cam-info"><span class="cam-title">A6 : 國三安坑South</span></div>
                 <div class="video-wrapper"><img class="highway-img" data-src="https://cctvn.freeway.gov.tw/abs2mjpg/bmjpg?camera=33120" src="https://cctvn.freeway.gov.tw/abs2mjpg/bmjpg?camera=33120"></div>
             </div>
             <div class="cam-card">
-                <div class="cam-info"><span class="cam-title">A7: 安坑往北 (國三)</span></div>
+                <div class="cam-info"><span class="cam-title">A7 : 國三安坑North (左側往北車流)</span></div>
                 <div class="video-wrapper"><img class="highway-img" data-src="https://cctvn.freeway.gov.tw/abs2mjpg/bmjpg?camera=33010" src="https://cctvn.freeway.gov.tw/abs2mjpg/bmjpg?camera=33010"></div>
             </div>
         </div>
     </section>
 
-    <!-- 回程 -->
     <section id="section-to-xindian" class="content-section active">
         <div class="section-header">
             <div class="title-group">
@@ -318,15 +324,15 @@
         </div>
         <div class="grid-container">
             <div class="cam-card">
-                <div class="cam-info"><span class="cam-title">B1: 基高往公館</span><div class="live-indicator"><div class="dot"></div>LIVE</div></div>
+                <div class="cam-info"><span class="cam-title">B1 : 基高 > 公館 (左 > 新店)</span><div class="live-indicator"><div class="dot"></div>LIVE</div></div>
                 <div class="video-wrapper"><video id="video-B1" autoplay muted playsinline></video></div>
             </div>
             <div class="cam-card">
-                <div class="cam-info"><span class="cam-title">B2: 公館圓環</span><div class="live-indicator"><div class="dot"></div>LIVE</div></div>
+                <div class="cam-info"><span class="cam-title">B2 : 公館圓環 (右 > 新店)</span><div class="live-indicator"><div class="dot"></div>LIVE</div></div>
                 <div class="video-wrapper"><video id="video-B2" autoplay muted playsinline></video></div>
             </div>
             <div class="cam-card">
-                <div class="cam-info"><span class="cam-title">B3: 師大路 > 環快</span><div class="live-indicator"><div class="dot"></div>LIVE</div></div>
+                <div class="cam-info"><span class="cam-title">B3 : 師大路 > 環快</span><div class="live-indicator"><div class="dot"></div>LIVE</div></div>
                 <div class="video-wrapper"><video id="video-B3" autoplay muted playsinline></video></div>
             </div>
         </div>
@@ -357,16 +363,13 @@
         }
 
         function globalRefresh() {
-            // 1. 刷新所有 HLS 影片
             Object.keys(sources).forEach(id => setupHls(id, sources[id]));
-            // 2. 刷新所有國道圖片
             const images = document.querySelectorAll('.highway-img');
             images.forEach(img => {
                 const base = img.getAttribute('data-src');
                 img.src = base + "&t=" + new Date().getTime();
             });
             
-            // 按鈕視覺回饋
             const btn = document.querySelector('.btn-refresh-all');
             const originalText = btn.innerText;
             btn.innerText = "✓ 已更新";
@@ -375,7 +378,9 @@
 
         function switchTab(mode) {
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
+            const currentTab = event ? event.target : document.querySelector(`.tab-btn[onclick*='${mode}']`);
+            if (currentTab) currentTab.classList.add('active');
+
             const sTaipei = document.getElementById('section-to-taipei');
             const sXindian = document.getElementById('section-to-xindian');
             if (mode === 'all') { sTaipei.classList.add('active'); sXindian.classList.add('active'); }
@@ -385,7 +390,7 @@
 
         window.onload = function() {
             Object.keys(sources).forEach(id => setupHls(id, sources[id]));
-            setInterval(globalRefresh, 300000); // 5分鐘自動全局刷一次
+            setInterval(globalRefresh, 300000); 
         };
     </script>
 </body>
