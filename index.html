@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>即時路況預覽 | 新店 ⇄ 北市</title>
+    <title>即時路況預覽 | 新店 ⇄ 北市 ⇄ 北車</title>
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
     <style>
         :root {
@@ -197,45 +197,6 @@
             object-fit: contain;
         }
 
-        .placeholder-box {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            background: #1a1a1a;
-            color: #666;
-            padding: 10px;
-            text-align: center;
-        }
-
-        /* 放大按鈕樣式 */
-        .btn-link {
-            display: inline-block;
-            margin-top: 10px;
-            padding: 12px 28px;
-            background: var(--accent-color);
-            color: white;
-            text-decoration: none;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: bold;
-            box-shadow: 0 4px 15px rgba(50, 115, 220, 0.3);
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-
-        .btn-link:hover {
-            background: #4a8dfd;
-            transform: scale(1.1);
-            box-shadow: 0 6px 20px rgba(50, 115, 220, 0.5);
-        }
-
-        .btn-link:active {
-            transform: scale(0.95);
-        }
-
         footer {
             margin-top: 40px;
             padding: 20px;
@@ -262,11 +223,13 @@
                     <button class="tab-btn active" onclick="switchTab('all')">ALL</button>
                     <button class="tab-btn" onclick="switchTab('to-taipei')">>北市</button>
                     <button class="tab-btn" onclick="switchTab('to-xindian')">>新店</button>
+                    <button class="tab-btn" onclick="switchTab('main-station')">>北車</button>
                 </div>
             </div>
         </div>
     </header>
 
+    <!-- 區塊 1: 新店 -> 北市 -->
     <section id="section-to-taipei" class="content-section active">
         <div class="section-header">
             <div class="title-group">
@@ -277,20 +240,12 @@
         
         <div class="grid-container">
             <div class="cam-card">
-                <div class="cam-info"><span class="cam-title">A1: 環河 x 中正1</span></div>
-                <div class="video-wrapper">
-                    <div class="placeholder-box">
-                        <a href="https://atis.ntpc.gov.tw/ATIS/ShowFrame4CCTV/C000404" target="_blank" class="btn-link">A1 : 環河 x 中正1</a>
-                    </div>
-                </div>
+                <div class="cam-info"><span class="cam-title">A1 : 環河 x 中正1 (C000042)</span><div class="live-indicator"><div class="dot"></div>LIVE</div></div>
+                <div class="video-wrapper"><video id="video-A1" autoplay muted playsinline></video></div>
             </div>
             <div class="cam-card">
-                <div class="cam-info"><span class="cam-title">A2: 環河 x 中正2</span></div>
-                <div class="video-wrapper">
-                    <div class="placeholder-box">
-                        <a href="https://atis.ntpc.gov.tw/ATIS/ShowFrame4CCTV/C000042" target="_blank" class="btn-link">A2 : 環河 x 中正2</a>
-                    </div>
-                </div>
+                <div class="cam-info"><span class="cam-title">A2 : 環河 x 十四張 (C000534)</span><div class="live-indicator"><div class="dot"></div>LIVE</div></div>
+                <div class="video-wrapper"><video id="video-A2" autoplay muted playsinline></video></div>
             </div>
             <div class="cam-card">
                 <div class="cam-info"><span class="cam-title">A3 : 環快 > 基高</span><div class="live-indicator"><div class="dot"></div>LIVE</div></div>
@@ -315,6 +270,7 @@
         </div>
     </section>
 
+    <!-- 區塊 2: 北市 -> 新店 -->
     <section id="section-to-xindian" class="content-section active">
         <div class="section-header">
             <div class="title-group">
@@ -338,16 +294,40 @@
         </div>
     </section>
 
+    <!-- 區塊 3: 北車 -->
+    <section id="section-main-station" class="content-section active">
+        <div class="section-header">
+            <div class="title-group">
+                <h2>北車</h2>
+                <div class="weather-chip">📍 中正區 <span class="weather-temp">26°C</span> ☀️</div>
+            </div>
+        </div>
+        <div class="grid-container">
+            <div class="cam-card">
+                <div class="cam-info"><span class="cam-title">C1 : 北車 (忠孝西路)</span><div class="live-indicator"><div class="dot"></div>LIVE</div></div>
+                <div class="video-wrapper"><video id="video-C1" autoplay muted playsinline></video></div>
+            </div>
+            <div class="cam-card">
+                <div class="cam-info"><span class="cam-title">C2 : 西門 (中華路一段)</span><div class="live-indicator"><div class="dot"></div>LIVE</div></div>
+                <div class="video-wrapper"><video id="video-C2" autoplay muted playsinline></video></div>
+            </div>
+        </div>
+    </section>
+
     <footer>idea by KG | 點擊重新整理可立即更新所有路況影像</footer>
 
     <script>
         const sources = {
+            'video-A1': 'https://cctvatis2.ntpc.gov.tw/hls/C000042/live.m3u8',
+            'video-A2': 'https://cctvatis5.ntpc.gov.tw/hls/C000534/live.m3u8',
             'video-A3': 'https://jtmctrafficcctv5.gov.taipei/NVR/bc6377b9-5ee7-447f-bbc5-e72ce427da83/live.m3u8',
             'video-A4': 'https://jtmctrafficcctv5.gov.taipei/NVR/83a4f760-46b7-4711-b064-16dcce6fbf63/live.m3u8',
             'video-A5': 'https://jtmctrafficcctv5.gov.taipei/NVR/7140e6e8-fe07-471c-b798-65c634b9e2a2/live.m3u8',
             'video-B1': 'https://jtmctrafficcctv5.gov.taipei/NVR/52c5b1f5-822e-4ec1-9ad2-1cba32e2d815/live.m3u8',
             'video-B2': 'https://jtmctrafficcctv2.gov.taipei/NVR/0fb4fbce-c1a8-4d22-aded-94dffe61b84d/live.m3u8',
-            'video-B3': 'https://jtmctrafficcctv2.gov.taipei/NVR/3dbf7fcc-7725-46ab-a124-05c67db99dd7/live.m3u8'
+            'video-B3': 'https://jtmctrafficcctv2.gov.taipei/NVR/3dbf7fcc-7725-46ab-a124-05c67db99dd7/live.m3u8',
+            'video-C1': 'https://jtmctrafficcctv2.gov.taipei/NVR/ab48b2e9-4194-4db9-b252-fc68ee778b93/live.m3u8',
+            'video-C2': 'https://jtmctrafficcctv4.gov.taipei/NVR/da74d801-11ba-460d-94b8-b2ad81fe51a4/live.m3u8'
         };
 
         function setupHls(id, url) {
@@ -383,9 +363,25 @@
 
             const sTaipei = document.getElementById('section-to-taipei');
             const sXindian = document.getElementById('section-to-xindian');
-            if (mode === 'all') { sTaipei.classList.add('active'); sXindian.classList.add('active'); }
-            else if (mode === 'to-taipei') { sTaipei.classList.add('active'); sXindian.classList.remove('active'); }
-            else { sTaipei.classList.remove('active'); sXindian.classList.add('active'); }
+            const sMainStation = document.getElementById('section-main-station');
+
+            if (mode === 'all') {
+                sTaipei.classList.add('active');
+                sXindian.classList.add('active');
+                sMainStation.classList.add('active');
+            } else if (mode === 'to-taipei') {
+                sTaipei.classList.add('active');
+                sXindian.classList.remove('active');
+                sMainStation.classList.remove('active');
+            } else if (mode === 'to-xindian') {
+                sTaipei.classList.remove('active');
+                sXindian.classList.add('active');
+                sMainStation.classList.remove('active');
+            } else if (mode === 'main-station') {
+                sTaipei.classList.remove('active');
+                sXindian.classList.remove('active');
+                sMainStation.classList.add('active');
+            }
         }
 
         window.onload = function() {
